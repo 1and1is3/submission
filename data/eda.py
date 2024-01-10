@@ -9,5 +9,6 @@ def perform_eda():
 
     df.to_csv("census.csv")
 
+
 if __name__ == '__main__':
     perform_eda()

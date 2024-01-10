@@ -1,17 +1,16 @@
-import os 
 from main import app
 from fastapi.testclient import TestClient
 import json
-import sys
-import inspect
 
 
 client = TestClient(app)
+
 
 def test_welcome_message():
     response = client.get("/")
     assert response.status_code == 200
     assert response.json() == ['Welcome message!']
+
 
 def test_inference():
     data = {
@@ -33,6 +32,7 @@ def test_inference():
     response = client.post("/inference/", data=json.dumps(data))
     assert response.status_code == 200
 
+
 def test_inference_request():
     data = {
         "age": 25,
@@ -52,6 +52,7 @@ def test_inference_request():
     }
     response = client.post("/inference/", data=json.dumps(data))
     assert response.json() == ('>50k€' or '<50k€')
+
 
 def test_inference_request_2():
     data = {
