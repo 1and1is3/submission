@@ -6,6 +6,7 @@ from ml.data import process_data
 from ml.model import train_model, inference, compute_model_metrics
 import os
 from sklearn.preprocessing import LabelBinarizer
+from slices import get_data
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 cwd = os.getcwd()
 
@@ -29,6 +30,7 @@ cat_features = [
     "sex",
     "native-country",
 ]
+get_data(test)
 X_train, y_train, encoder, lb = process_data(
     train, categorical_features=cat_features, label="salary", training=True
 )
