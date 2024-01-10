@@ -3,14 +3,14 @@ import pandas as pd
 # process_data : y and x same shape
 # model.py : train model exist model.sav
 # inference : imput shape same as output shape
-
+from joblib import dump, load
 from starter.ml.model import train_model, inference, compute_model_metrics
 from starter.ml.data import process_data
 import os
-
+cwd = os.getcwd()
 
 def test_process_data():
-        data = pd.read_csv('../data/census.csv')
+        data = pd.read_csv(f'{cwd}/../data/census.csv', index_col=0)
         cat_features = [
             "workclass",
             "education",
@@ -26,7 +26,7 @@ def test_process_data():
         assert X_train.shape[0] == data.shape[0]
 
 def test_train_model():
-        data = pd.read_csv('../data/census.csv')
+        data = pd.read_csv(f'{cwd}/../data/census.csv', index_col=0)
         cat_features = [
         "workclass",
         "education",
@@ -54,9 +54,10 @@ def test_inference():
         "sex",
         "native-country",
         ]
-        data = pd.read_csv('../data/census.csv')
+        encoder = load(f'{cwd}/../model/encoder.joblib')
+        data = pd.read_csv(f'{cwd}/../data/census.csv', index_col=0)
         X_test, y_test, _, _ = process_data(
-            data, categorical_features=cat_features, label="salary", training=True
+            data, categorical_features=cat_features, encoder=encoder, label="salary", training=True
         )
 
         preds = inference('../model/model.sav', X_test)

@@ -1,6 +1,9 @@
 from sklearn.metrics import fbeta_score, precision_score, recall_score
 from sklearn.linear_model import LogisticRegression
 import pickle
+import os
+os.chdir(os.path.dirname(os.path.abspath(__file__)))
+cwd = os.getcwd()
 
 # Optional: implement hyperparameter tuning.
 def train_model(X_train, y_train):
@@ -19,7 +22,7 @@ def train_model(X_train, y_train):
         Trained machine learning model.
     """
     clf = LogisticRegression(random_state=0).fit(X_train, y_train)
-    pickle.dump(clf, open('../model/model.sav', 'wb'))
+    pickle.dump(clf, open(f'{cwd}/../../model/model.sav', 'wb'))
 
 
 def compute_model_metrics(y, preds):
